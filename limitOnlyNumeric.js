@@ -20,7 +20,9 @@ function limitOnlyNumeric(evt) {
       // 最大数字长度
       nl = parseInt(el.getAttribute("data-numbers")) || 15,
       // 最大小数长度
-      dl = parseInt(el.getAttribute("data-decimals")) || 2,       
+      dl = parseInt(el.getAttribute("data-decimals")) || 2,
+      // 是否允许输入负数
+      sallow = !!el.getAttribute("data-substract"),
       val = el.value,
       // "." 位置
       dotIndex = val.indexOf("."),
@@ -38,7 +40,7 @@ function limitOnlyNumeric(evt) {
       
       // 验证输入的值
       function validateValue() {
-        if (val[0] == "-") nl = nl + 1;//负号开头多加一位
+        if (sallow && val[0] == "-") nl = nl + 1;//负号开头多加一位
         if (
           // 未输入过"."
           dotIndex == -1 && val.length < nl ||
@@ -74,6 +76,8 @@ function limitOnlyNumeric(evt) {
         return;
     }
     else if (
+      // 允许负数
+      sallow &&
       // "-"
       (key == 189 ||
       // 数字键盘上的 "-"
