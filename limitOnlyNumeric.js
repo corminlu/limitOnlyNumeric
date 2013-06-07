@@ -18,9 +18,9 @@ function limitOnlyNumeric(evt) {
      
     var el = e.target || e.srcElement,
       // 最大数字长度
-      nl = parseInt(el.getAttribute("data-numbers")) || 15,
+      nl = parseInt(el.getAttribute("data-numbers")),
       // 最大小数长度
-      dl = parseInt(el.getAttribute("data-decimals")) || 2,
+      dl = parseInt(el.getAttribute("data-decimals")),
       // 是否允许输入负数
       sallow = !!el.getAttribute("data-substract"),
       val = el.value,
@@ -28,9 +28,16 @@ function limitOnlyNumeric(evt) {
       dotIndex = val.indexOf("."),
       rng = caret.call(el),
       // 光标在"."左边
-      rLeft = rng.end <= dotIndex,
+      rLeft = dotIndex > -1 && rng.end <= dotIndex,
       // 光标在"."右边
-      rRight = rng.begin > dotIndex;
+      rRight = dotIndex > -1 && rng.begin > dotIndex;
+       
+    if (isNaN(nl))
+      nl = 15;
+    if (isNaN(dl))
+      dl = 4;
+    if (nl < 1 || dl < 0)
+      throw new Error("parameter is not valid");
        
     if (
       // 数字  
