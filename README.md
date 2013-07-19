@@ -24,6 +24,15 @@ limit textfield input to numeric only
 `$(".numericOnly").keydown(limitOnlyNumeric);`
 
 
+###参数设置###
+
+* data-numbers：整数长度，默认15
+* data-decimals：小数长度，默认4
+* data-substract：是否允许输入负数，默认false
+
+        <input type="text" style="ime-mode:disabled" data-numbers="8" data-decimals="2" data-substract="true" ... />
+        
+
 ###需要额外处理的情况###
 
 * 禁用粘贴：
